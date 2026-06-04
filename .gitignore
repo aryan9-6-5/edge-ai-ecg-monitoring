@@ -1,0 +1,28 @@
+# venv
+venv/
+.venv/
+Env/
+env/
+
+# Python cache
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE configurations
+.idea/
+.vscode/
+
+# Telemetry data logs (must not be pushed to GitHub)
+edge/data/raw/*.csv
+edge/data/processed/*.csv
+edge/data/processed/*.json
+edge/data/sessions/
+
+# Clinical dataset (since it can be large/generated, exclude it from GitHub)
+edge/data/mitbih/*.csv
+
+# Trained models
+edge/models/*.pkl
+*.sh
+*.bat
