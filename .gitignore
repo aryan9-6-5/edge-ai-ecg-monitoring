@@ -14,15 +14,16 @@ env/
 .vscode/
 
 # Telemetry data logs (must not be pushed to GitHub)
-edge/data/raw/*.csv
-edge/data/processed/*.csv
-edge/data/processed/*.json
-edge/data/sessions/
+data/raw/*.csv
+data/processed/*.csv
+data/processed/*.json
+data/sessions/
+data/active_session.json
 
 # Clinical dataset (since it can be large/generated, exclude it from GitHub)
-edge/data/mitbih/*.csv
+data/mitbih/*.csv
 
 # Trained models
-edge/models/*.pkl
+models/*.pkl
 *.sh
 *.bat

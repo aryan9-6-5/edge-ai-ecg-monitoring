@@ -3,11 +3,13 @@ import os
 import pandas as pd
 import numpy as np
 
-def compute_signal_features(signal):
+def compute_signal_features(signal, normalize=True):
     """
     Computes 6 statistical features of an ECG signal array or Series:
     mean, std, max, min, skewness, and kurtosis.
     Handles NaN values and empty signals gracefully.
+    If normalize=True, Min-Max normalizes the signal to [0, 1] range first
+    to ensure scale consistency with the model training dataset.
     """
     # Convert to pandas Series for clean built-in skew/kurtosis calculation
     if not isinstance(signal, pd.Series):
@@ -21,6 +23,14 @@ def compute_signal_features(signal):
     if len(s) == 0:
         return {"mean": 0.0, "std": 0.0, "max": 0.0, "min": 0.0, "skew": 0.0, "kurt": 0.0}
         
+    if normalize:
+        s_min = s.min()
+        s_max = s.max()
+        if s_max - s_min > 1e-8:
+            s = (s - s_min) / (s_max - s_min)
+        else:
+            s = s - s_min
+            
     mean_val = float(s.mean())
     std_val = float(s.std() if len(s) > 1 else 0.0)
     max_val = float(s.max())
@@ -44,9 +54,15 @@ def compute_signal_features(signal):
     }
 
 def main():
+    import sys
+    sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+    from session_manager import get_active_session, get_session_paths
+    
     print("Running feature extraction on live processed data...")
-    input_file = "data/processed/ecg_filtered.csv"
-    output_file = "data/processed/features.csv"
+    session_name = get_active_session()
+    paths = get_session_paths(session_name)
+    input_file = paths["filtered"]
+    output_file = os.path.join(paths["dir"], "features.csv")
     
     if not os.path.exists(input_file):
         print(f"Error: Preprocessed signal file '{input_file}' not found.")

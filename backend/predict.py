@@ -1,8 +1,13 @@
 # backend/predict.py
 import os
+import sys
 import time
 import pandas as pd
 import joblib
+
+# Ensure backend directory is in path for imports
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+from session_manager import get_active_session, get_session_paths
 
 # Label mapping for clinical descriptions
 LABEL_MAP = {
@@ -14,12 +19,24 @@ LABEL_MAP = {
 }
 
 def make_prediction(model_path="models/ecg_model.pkl", 
-                    features_path="data/processed/features.csv", 
-                    predictions_log_path="data/processed/predictions.csv"):
+                    features_path=None, 
+                    predictions_log_path=None):
     """
     Loads the trained model and the latest feature vector, performs prediction,
     logs the result to a history file, and returns the prediction and diagnostic label.
+    
+    If features_path or predictions_log_path are not provided, they default to the
+    active session's paths (data/sessions/default/).
     """
+    # Resolve session-based default paths
+    if features_path is None or predictions_log_path is None:
+        session_name = get_active_session()
+        paths = get_session_paths(session_name)
+        if features_path is None:
+            features_path = os.path.join(paths["dir"], "features.csv")
+        if predictions_log_path is None:
+            predictions_log_path = paths["predictions"]
+    
     if not os.path.exists(model_path):
         return None, "Model file not found. Please train the model first."
     if not os.path.exists(features_path):

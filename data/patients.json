@@ -1,0 +1,38 @@
+{
+    "P-101": {
+        "id": "P-101",
+        "name": "John Doe",
+        "age": 68,
+        "gender": "Male",
+        "baseline_hr": 72.0,
+        "arrhythmia_history": true,
+        "notes": "History of hypertension and coronary artery disease."
+    },
+    "P-102": {
+        "id": "P-102",
+        "name": "Jane Smith",
+        "age": 32,
+        "gender": "Female",
+        "baseline_hr": 68.0,
+        "arrhythmia_history": false,
+        "notes": "Routine screening. Physically active. No cardiac history."
+    },
+    "P-103": {
+        "id": "P-103",
+        "name": "Robert Chen",
+        "age": 45,
+        "gender": "Male",
+        "baseline_hr": 75.0,
+        "arrhythmia_history": true,
+        "notes": "History of supraventricular premature beats and anxiety."
+    },
+    "P-104": {
+        "id": "P-104",
+        "name": "Emma Watson",
+        "age": 71,
+        "gender": "Female",
+        "baseline_hr": 65.0,
+        "arrhythmia_history": true,
+        "notes": "Prior myocardial infarction. Normal pacemaker baseline."
+    }
+}
